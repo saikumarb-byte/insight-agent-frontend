@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 type AssetKind =
@@ -238,11 +239,16 @@ export default function Home() {
               <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center">
                   {result.authorImage?.previewUrl && (
-                    <img
-                      src={result.authorImage.previewUrl}
-                      alt={result.authorImage.name || "Author image"}
-                      className="h-24 w-24 rounded-full object-cover ring-2 ring-slate-200"
-                    />
+                    <div className="h-24 w-24 overflow-hidden rounded-full ring-2 ring-slate-200">
+                      <Image
+                        src={result.authorImage.previewUrl}
+                        alt={result.authorImage.name || "Author image"}
+                        width={96}
+                        height={96}
+                        unoptimized
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
                   )}
 
                   <div className="flex-1">
@@ -302,7 +308,16 @@ export default function Home() {
                 <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
                   {selectedAsset.type === "contentImage" || selectedAsset.type === "desktopBanner" || selectedAsset.type === "mobileBanner" || selectedAsset.type === "other" ? (
                     selectedAsset.previewUrl ? (
-                      <img src={selectedAsset.previewUrl} alt={selectedAsset.name} className="max-h-[500px] w-full object-contain" />
+                      <div className="relative max-h-[500px] w-full overflow-hidden">
+                        <Image
+                          src={selectedAsset.previewUrl}
+                          alt={selectedAsset.name}
+                          width={1200}
+                          height={800}
+                          unoptimized
+                          className="max-h-[500px] w-full object-contain"
+                        />
+                      </div>
                     ) : (
                       <div className="p-6 text-sm text-slate-500">No image preview available.</div>
                     )
